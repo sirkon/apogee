@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant H as Жара
+    participant M as Мигратор
+    participant D as Мета
+    participant C as Холод
+    participant W as WAL
+
+    H ->>+ M: Смигрируй эти данные<br>(метаданные приложены).
+    M ->> D: Проверка, может контейнер уже в холоде.
+    M ->> M: Может сказать<br>жаре что уже всё.
+    M ->> C: Берём страйп в аренду.
+
+    M ->> W: IntentMigrate(ContainerID, HotData, StripeData)
+    M ->> C: Пишем контейнер в страйп.
+    M ->> D: В транзакции обновляем ссылку<br>при условии что текущее значение<br>указывывает на жару.
+    M ->> W: Закрываем сессию.
+    M ->>- H: Смигрировали.

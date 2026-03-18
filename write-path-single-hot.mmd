@@ -1,0 +1,20 @@
+sequenceDiagram
+    actor A as Actor
+    participant Coordinator
+    participant WAL
+    participant Hot
+    participant Buffer
+    participant FragmentsDB
+    participant RecordsDB
+
+    A->>Coordinator: Запиши N байт
+    Coordinator->>WAL: начни сессию
+    Coordinator->>Hot: Дай буффер для N байт
+    Coordinator ->> WAL: IntentWriteFragmentToBuffer(buffer_id, offset, size, rid, fid)
+    Coordinator->>Hot: Запиши фрагмент fid и сними лок
+
+
+    Coordinator->>FragmentsDB: InsertFragment(fid)
+    Coordinator->>RecordsDB: AppendFragment(rid, fid)
+
+    Coordinator->>A: закрой сессию<br>(rid)

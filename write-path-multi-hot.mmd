@@ -1,0 +1,20 @@
+sequenceDiagram
+    actor A as Клиент
+    participant C as Координатор
+    participant W as WAL
+    participant H as Жара
+    participant M as Мета
+
+    A->>+C: Запиши N байт
+    C->>C: Делим на фрагменты
+    C->>W: IntentWriteRecord(rid)
+    C->>M: InsertRecord(rid)
+    loop Цикл по фрагментам.
+        C->>W: IntentWriteFragmentToBuffer(buffer_id, offset, size, rid, fid)<br>с перезаписью
+        C->>H: Дай буффер для n байт
+        C->>H: Запиши фрагмент fid и сними лок
+        C->>M: InsertFragment(fid)
+        C->>M: AppendFragment(rid, fid)
+    end
+    C->>W: закрой сессию
+    C->>-A: Возврат rid
