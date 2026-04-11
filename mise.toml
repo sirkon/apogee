@@ -1,0 +1,13 @@
+[tasks.prepare]
+depends = ["prepare-pdfs"]
+description = "Prepare resources."
+
+[tasks.cleanup]
+hide = true
+run = "rm architecture.aux architecture.log architecture.toc"
+
+[tasks.compile]
+depends = ["prepare"]
+description = "Compile architecture document into architecture.pdf"
+run = "xelatex -interaction=nonstopmode architecture.tex"
+depends_post = ["cleanup"]

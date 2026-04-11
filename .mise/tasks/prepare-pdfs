@@ -1,0 +1,7 @@
+#!/bin/sh
+
+find ./resources -name '*.svg' | while read X; do
+  out="${X%.svg}.pdf"
+  echo "Compile $X into $out"
+  inkscape "$X" --export-type=pdf --export-filename="$out" --export-overwrite --export-text-to-path;
+done
