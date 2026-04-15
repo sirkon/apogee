@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant H as Hot Tier
+    participant M as Migrator
+    participant D as Meta DB
+    participant C as Cold Tier
+    participant W as WAL
+
+    H ->>+ M: Migrate these data<br>(metadata attached)
+    M ->> D: Check if container is already in Cold
+    M ->> M: May notify Hot Tier<br>if already completed
+    M ->> C: Acquire Stripe Lease
+
+    M ->> W: IntentMigrate(ContainerID, HotData, StripeData)
+    M ->> C: Write container to Stripe
+    M ->> D: Atomic link update (txn)<br>provided current value<br>points to Hot Tier
+    M ->> W: Close session
+    M ->>- H: Migration completed

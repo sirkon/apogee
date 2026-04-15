@@ -1,0 +1,11 @@
+sequenceDiagram
+    actor A as Client
+    participant C as Coordinator
+    participant H as Hot Tier
+    participant M as Meta DB
+
+    A ->>+ C: Send data
+    C ->> C: Chunk data into<br>fragments
+    C ->> H: Sequential node selection,<br>buffer requests, and<br>data persistence
+    C ->> M: Persist record and<br>fragment metadata
+    C ->>- A: Return record ID

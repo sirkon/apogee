@@ -4,10 +4,16 @@ description = "Prepare resources."
 
 [tasks.cleanup]
 hide = true
-run = "rm architecture.aux architecture.log architecture.toc"
+run = "rm -f architecture*.aux architecture*.log architecture*.toc architecture*.fdb* architecture*.fls"
 
 [tasks.compile]
 depends = ["prepare"]
 description = "Compile architecture document into architecture.pdf"
 run = "xelatex -interaction=nonstopmode architecture.tex"
 depends_post = ["cleanup"]
+
+[tasks.compile-en]
+depends = ['prepare']
+description = 'Compile English version of the architecture into architecture-en.pdf'
+run = 'xelatex -interaction=nonstopmode architecture-en.tex'
+depends_post = ['cleanup']

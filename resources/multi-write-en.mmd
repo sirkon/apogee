@@ -1,0 +1,20 @@
+sequenceDiagram
+    actor A as Actor
+    participant Coordinator
+    participant WAL
+    participant Hot as Hot Tier
+    participant Buffer
+    participant FragmentsDB as Fragments DB
+    participant RecordsDB as Records DB
+
+    A->>Coordinator: Write N bytes
+    Coordinator->>WAL: Start session
+    Coordinator->>Hot: Request buffer for N bytes
+    Coordinator ->> WAL: IntentWriteFragmentToBuffer<br>(buffer_id, offset, size, rid1, ridN, fid1, fidN)
+    Coordinator->>Hot: Persist fragment (fid) & release lock
+
+
+    Coordinator->>FragmentsDB: Batch Insert Fragments (fid1 … fidN)
+    Coordinator->>RecordsDB: Append Fragments to Records (rid1, fid1, …, ridN, fidN)
+
+    Coordinator->>A: Close session<br>(return rid)

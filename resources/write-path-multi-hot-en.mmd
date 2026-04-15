@@ -1,0 +1,20 @@
+sequenceDiagram
+    actor A as Client
+    participant C as Coordinator
+    participant W as WAL
+    participant H as Hot Tier
+    participant M as Meta DB
+
+    A->>+C: Write N bytes
+    C->>C: Partition into fragments
+    C->>W: IntentWriteRecord(rid)
+    C->>M: InsertRecord(rid)
+    loop Per fragment
+        C->>W: IntentWriteFragmentToBuffer(buffer_id, offset, size, rid, fid)<br>with overwrite
+        C->>H: Request buffer for n bytes
+        C->>H: Write fragment (fid) and release lock
+        C->>M: InsertFragment(fid)
+        C->>M: AppendFragment(rid, fid)
+    end
+    C->>W: Close session
+    C->>-A: Return rid
