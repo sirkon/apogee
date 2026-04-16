@@ -373,6 +373,7 @@
 
     \subsubsection{Records}
 
+    \noindent
     \begin{tabular}{|Sl|Sc|Sc|Sr|}
         \hline
         record.id & single & fragment.id & $\dots$ \\
@@ -381,6 +382,7 @@
 
     \bigskip
 
+    \noindent
     \begin{tabular}{|Sl|Sc|Sc|Sr|}
         \hline
         record.id & multi & no\_of\_fragments & $\dots$ \\
@@ -392,6 +394,7 @@
 
     \subsubsection{Fragments}
 
+    \noindent
     \begin{tabular}{|Sl|Sc|Sc|Sc|Sc|Sc|Sc|Sc|Sr|}
         \hline
         fragment.id & container.id & offset & size & crc64 & compression type & blake3 & $\dots$ \\
@@ -403,6 +406,7 @@
 
     \subsubsection{Links}
 
+    \noindent
     \begin{tabular}{|Sl|Sc|Sc|Sr|}
         \hline
         record.id & fragment.index & fragment.id \\
@@ -413,6 +417,7 @@
     Stores mappings between records and fragments:
     \bigskip
 
+    \noindent
     \begin{tabular}{|Sl|Sc|Sc|Sr|}
         \hline
         rid & 0     & $\operatorname{fid}_0$ \\
@@ -444,6 +449,7 @@ for i in [0, record.no_of_fragments):
 
     \subsubsection{Containers}
 
+    \noindent
     \begin{tabular}{|Sl|Sr|}
         \hline
         container.id & ref \\
@@ -455,6 +461,7 @@ for i in [0, record.no_of_fragments):
 
     \subsubsection{Tuples}
 
+    \noindent
     \begin{tabular}{|Sl|Sr|}
         \hline
         tuple.id & payload \\

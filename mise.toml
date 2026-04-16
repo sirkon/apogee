@@ -10,10 +10,8 @@ run = "rm -f architecture*.aux architecture*.log architecture*.toc architecture*
 depends = ["prepare"]
 description = "Compile architecture document into architecture.pdf"
 run = "xelatex -interaction=nonstopmode architecture.tex"
-depends_post = ["cleanup"]
 
 [tasks.compile-en]
 depends = ['prepare']
 description = 'Compile English version of the architecture into architecture-en.pdf'
 run = 'xelatex -interaction=nonstopmode architecture-en.tex'
-depends_post = ['cleanup']
