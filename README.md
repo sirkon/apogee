@@ -1,8 +1,7 @@
 # apogee
-Архитектура объектового хранилища. Кодовое имя: Апогей.
+Low-Level Design (LLD) for a high-performance object storage engine leveraging io_uring, SPDK, distributed WAL, and exascale-ready ClickHouse-driven GC.
+
+[Architecture](./architecture-en.pdf)
 
 [Архитектура](./architecture.pdf)
 
-Architecture of an object store code name Apogee.
-
-[Architecture](./architecture-en.pdf)
